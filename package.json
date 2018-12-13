@@ -1,0 +1,14 @@
+{
+  "name": "puptime",
+  "version": "1.0.0",
+  "description": "Load Monitoring Application",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Alex Eisele",
+  "license": "MIT",
+  "dependencies": {
+    "prettier": "^1.15.3"
+  }
+}

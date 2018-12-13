@@ -1,0 +1,15 @@
+{
+  "name": "puptime-server",
+  "version": "1.0.0",
+  "description": "Server to gather and broadcast uptime metrics to connected clients",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alex Eisele",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "nano": "^7.1.1"
+  }
+}
