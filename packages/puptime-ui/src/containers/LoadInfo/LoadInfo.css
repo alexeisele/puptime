@@ -1,0 +1,5 @@
+.load-info-container {
+  display: flex;
+  flex-flow: column;
+  margin-top: 2rem;
+}
