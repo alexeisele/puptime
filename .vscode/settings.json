@@ -1,0 +1,3 @@
+{
+  "typescript.tsdk": "./packages/puptime-ui/typescrpt/lib"
+}
