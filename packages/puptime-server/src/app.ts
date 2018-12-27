@@ -3,9 +3,8 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import { Mongoose, connect, model } from "mongoose";
 import { Routes } from "./routes/load-event-routes";
-import { LoadEventSchema, ILoadEvent } from "./models/load-event-model";
+import { ILoadEvent } from "./models/load-event-model";
 const LOAD_CHECK_INTERVAL = 10000;
-const LoadEvent = model("LoadEvent", LoadEventSchema);
 
 class App {
   public app: express.Application;
@@ -57,19 +56,9 @@ class App {
       cpuCount,
       uptime
     };
-    console.log(`Sending and saving load event - ${JSON.stringify(loadEvent)}`);
-    this.broadCastLoadEvent(loadEvent);
-    this.saveLoadEvent(loadEvent);
+    this.routes.loadEventController.publishLoadEvent(loadEvent);
+    this.routes.loadEventController.saveLoadEvent(loadEvent);
   };
-
-  private broadCastLoadEvent(event: ILoadEvent) {
-    this.routes.loadEventController.publishLoadEvent(event);
-  }
-
-  private saveLoadEvent(event: ILoadEvent) {
-    const loadEvent = new LoadEvent(event);
-    loadEvent.save();
-  }
 
   private shutDown = () => {
     this.dbConnection.disconnect();

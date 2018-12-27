@@ -17,11 +17,35 @@ export class LoadEventController {
     });
   }
 
-  public streamLoadEvents(req: Request, res: Response) {
+  public streamLoadEvents = (req: Request, res: Response) => {
+    console.log(`Load Event stream established`);
+    this.ensureNoTransform(res);
     this.loadEventStream.init(req, res);
+  };
+
+  public saveLoadEvent(event: ILoadEvent) {
+    const loadEvent = new LoadEvent(event);
+    loadEvent.save();
   }
 
-  public publishLoadEvent(event: ILoadEvent) {
+  public publishLoadEvent = (event: ILoadEvent) => {
     this.loadEventStream.send(event);
+  };
+
+  /**
+   * Workaround to ensure that server sent events are not
+   * compressed/buffered by any reverse proxy's between the server and client
+   * @param res Response
+   */
+  private ensureNoTransform(res: Response) {
+    const originalSetHeader = res.setHeader.bind(res);
+    const setHeaderOverride = (header: string, value: string) => {
+      if (header === "Cache-Control") {
+        originalSetHeader(header, "no-transform");
+      } else {
+        originalSetHeader(header, value);
+      }
+    };
+    res.setHeader = setHeaderOverride;
   }
 }
