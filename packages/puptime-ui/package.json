@@ -24,7 +24,7 @@
     "typescript": "^3.2.2"
   },
   "scripts": {
-    "clean": "rm -rf dist node_modules",
+    "clean": "rm -rf build node_modules",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

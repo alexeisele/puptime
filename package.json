@@ -4,7 +4,7 @@
   "description": "Load Monitoring Application",
   "main": "index.js",
   "scripts": {
-    "clean": "concurrently \"rm -rf dist node_modules\" \"cd packages/puptime-server && npm run clean\" \"cd packages/puptime-ui && npm run clean\"",
+    "clean": "concurrently \"rm -rf node_modules\" \"cd packages/puptime-server && npm run clean\" \"cd packages/puptime-ui && npm run clean\"",
     "postinstall": "concurrently \"cd packages/puptime-server && npm install\" \"cd packages/puptime-ui && npm install\"",
     "start": "concurrently \"cd packages/puptime-server && npm run prod\" \"cd packages/puptime-ui && npm start\""
   },
