@@ -7,7 +7,7 @@ const LOAD_THRESHOLD = 1;
 
 export class LoadEventStore {
   @observable
-  private _loadEvents: IObservableArray<ILoadEvent> = observable.array();
+  private _loadEvents: IObservableArray<LoadEvent> = observable.array();
   @observable
   private _notifications: IObservableArray<INotification> = observable.array();
   @observable
@@ -24,8 +24,10 @@ export class LoadEventStore {
     return this._loadEvents;
   }
 
-  public set loadEvents(val: ILoadEvent[]) {
-    this._loadEvents.replace(val);
+  public set loadEvents(vals: ILoadEvent[]) {
+    this._loadEvents.replace(
+      vals.map(val => new LoadEvent(val, this.loadThreshold))
+    );
   }
 
   @computed
@@ -51,11 +53,7 @@ export class LoadEventStore {
   public async retrieveLoadEvents() {
     try {
       this._loading = true;
-      this.loadEvents = await LoadEventService.fetchLoadEvents().then(events =>
-        events.map(
-          (event: ILoadEvent) => new LoadEvent(event, this.loadThreshold)
-        )
-      );
+      this.loadEvents = await LoadEventService.fetchLoadEvents();
       this.loadEventStream = LoadEventService.subscribeToLoadEvents(
         this.addLoadEvent,
         this.onLoadEventStreamError
@@ -67,6 +65,7 @@ export class LoadEventStore {
           this.loadEvents[loadEventCount - 1]
         );
       }
+      return this.loadEvents;
     } catch (err) {
       console.log(`Error retrieving load events ${err}`);
       this.addNotification({
