@@ -1,17 +1,24 @@
-.App {
+.app {
   display: flex;
   flex-flow: column;
 }
 
-.App-header {
+.app-header {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.App-body {
+.app-body {
+  display: flex;
+  flex-flow: row nowrap;
+  padding: 2rem;
+  background-color: #eceff1;
+}
+
+.app-content {
+  flex: 3;
   display: flex;
   flex-flow: column;
-  padding: 2rem;
 }

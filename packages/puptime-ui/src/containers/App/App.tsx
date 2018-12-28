@@ -4,6 +4,7 @@ import { LoadEventStore } from "../../stores/load-event-store";
 import AppBar from "../../components/AppBar";
 import Metrics from "../Metrics/Metrics";
 import LoadInfo from "../LoadInfo/LoadInfo";
+import Notifications from "../Notifications/Notifications";
 
 import "./App.css";
 
@@ -14,16 +15,23 @@ class App extends React.Component {
     this.loadEventStore.retrieveLoadEvents();
   }
 
+  public componentWillUnmount() {
+    this.loadEventStore.dispose();
+  }
+
   public render() {
     return (
       <Provider loadEventStore={this.loadEventStore}>
-        <div className="App">
-          <header className="App-header">
+        <div className="app">
+          <header className="app-header">
             <AppBar />
           </header>
-          <div className="App-body">
-            <Metrics />
-            <LoadInfo />
+          <div className="app-body">
+            <div className="app-content">
+              <Metrics />
+              <LoadInfo />
+            </div>
+            <Notifications />
           </div>
         </div>
       </Provider>

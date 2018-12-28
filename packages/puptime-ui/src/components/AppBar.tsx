@@ -4,9 +4,9 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 
 export default () => (
-  <AppBar position="static" color="default">
+  <AppBar position="static">
     <Toolbar>
-      <Typography variant="h6" color="inherit">
+      <Typography variant="h5" color="inherit">
         Puptime - Fetch and Monitor Load
       </Typography>
     </Toolbar>

@@ -1,0 +1,13 @@
+.notifications-container {
+  flex: 1;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  margin-left: 1rem;
+  padding: 1rem 2rem;
+  overflow-y: scroll;
+}
+
+.notifications-title {
+  text-align: center;
+}
