@@ -1,8 +1,9 @@
 import { Schema } from "mongoose";
 
 export interface ILoadEvent {
-  time: number;
+  time: Date;
   oneMinuteLoadAverage: number;
+  twoMinuteLoadAverage: number;
   fiveMinuteLoadAverage: number;
   fifteenMinuteLoadAverage: number;
   cpuCount: number;
@@ -11,10 +12,12 @@ export interface ILoadEvent {
 
 export const LoadEventSchema = new Schema({
   time: {
-    type: Date,
-    default: Date.now
+    type: Date
   },
   oneMinuteLoadAverage: {
+    type: Number
+  },
+  twoMinuteLoadAverage: {
     type: Number
   },
   fiveMinuteLoadAverage: {

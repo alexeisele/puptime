@@ -1,4 +1,5 @@
 import * as mongoose from "mongoose";
+import * as moment from "moment";
 import { Request, Response } from "express";
 import SSE = require("express-sse");
 import { LoadEventSchema, ILoadEvent } from "./../models/load-event-model";
@@ -9,11 +10,11 @@ export class LoadEventController {
   private loadEventStream: SSE = new SSE();
 
   public getLoadEvents(req: Request, res: Response) {
-    LoadEvent.find({}, (err, loadEvent) => {
+    LoadEvent.find({}, (err, loadEvents) => {
       if (err) {
         res.send(err);
       }
-      res.json(loadEvent);
+      res.json(loadEvents);
     });
   }
 
@@ -31,6 +32,31 @@ export class LoadEventController {
   public publishLoadEvent = (event: ILoadEvent) => {
     this.loadEventStream.send(event);
   };
+
+  public getCustomLoadAverage(
+    minutes: number,
+    onComplete: (res: number) => void
+  ) {
+    LoadEvent.find(
+      {
+        time: {
+          $gte: moment()
+            .subtract(minutes, "minutes")
+            .toDate()
+        }
+      },
+      (err, loadEvents: ILoadEvent[]) => {
+        let average = 0;
+        if (loadEvents.length > 0) {
+          const sumOneMinute = loadEvents
+            .map(event => event.oneMinuteLoadAverage)
+            .reduce((sum, load) => (sum += load), 0);
+          average = sumOneMinute / loadEvents.length;
+        }
+        onComplete(average);
+      }
+    );
+  }
 
   /**
    * Workaround to ensure that server sent events are not

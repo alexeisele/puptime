@@ -41,23 +41,29 @@ class App {
 
   private checkLoad = () => {
     console.log(`Checking system load.`);
-    const [
-      oneMinuteLoadAverage,
-      fiveMinuteLoadAverage,
-      fifteenMinuteLoadAverage
-    ] = os.loadavg();
-    const uptime = os.uptime();
-    const cpuCount = os.cpus().length;
-    const loadEvent: ILoadEvent = {
-      time: Date.now(),
-      oneMinuteLoadAverage,
-      fiveMinuteLoadAverage,
-      fifteenMinuteLoadAverage,
-      cpuCount,
-      uptime
-    };
-    this.routes.loadEventController.publishLoadEvent(loadEvent);
-    this.routes.loadEventController.saveLoadEvent(loadEvent);
+    this.routes.loadEventController.getCustomLoadAverage(
+      2,
+      (twoMinuteLoadAverage: number) => {
+        const [
+          oneMinuteLoadAverage,
+          fiveMinuteLoadAverage,
+          fifteenMinuteLoadAverage
+        ] = os.loadavg();
+        const uptime = os.uptime();
+        const cpuCount = os.cpus().length;
+        const loadEvent: ILoadEvent = {
+          time: new Date(),
+          oneMinuteLoadAverage,
+          twoMinuteLoadAverage,
+          fiveMinuteLoadAverage,
+          fifteenMinuteLoadAverage,
+          cpuCount,
+          uptime
+        };
+        this.routes.loadEventController.publishLoadEvent(loadEvent);
+        this.routes.loadEventController.saveLoadEvent(loadEvent);
+      }
+    );
   };
 
   private shutDown = () => {
