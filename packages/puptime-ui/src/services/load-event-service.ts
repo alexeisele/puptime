@@ -16,7 +16,11 @@ export class LoadEventService {
   ): EventSource {
     const loadEventStream = new EventSource("/load-events/stream");
     loadEventStream.onmessage = (event: MessageEvent) => {
-      onmessage(JSON.parse(event.data) as ILoadEvent);
+      try {
+        onmessage(JSON.parse(event.data) as ILoadEvent);
+      } catch {
+        console.error(`Unable to parse event data`);
+      }
     };
     loadEventStream.onerror = onerror || console.error;
     return loadEventStream;
