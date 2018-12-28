@@ -4,11 +4,14 @@
   "description": "Load Monitoring Application",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "clean": "concurrently \"rm -rf dist node_modules\" \"cd packages/puptime-server && npm run clean\" \"cd packages/puptime-ui && npm run clean\"",
+    "postinstall": "concurrently \"cd packages/puptime-server && npm install\" \"cd packages/puptime-ui && npm install\"",
+    "start": "concurrently \"cd packages/puptime-server && npm run prod\" \"cd packages/puptime-ui && npm start\""
   },
   "author": "Alex Eisele",
   "license": "MIT",
   "dependencies": {
+    "concurrently": "^4.1.0",
     "prettier": "^1.15.3"
   }
 }
