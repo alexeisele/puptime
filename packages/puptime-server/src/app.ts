@@ -54,7 +54,10 @@ class App {
         const loadEvent: ILoadEvent = {
           time: new Date(),
           oneMinuteLoadAverage,
-          twoMinuteLoadAverage,
+          twoMinuteLoadAverage:
+            twoMinuteLoadAverage > 0
+              ? twoMinuteLoadAverage
+              : oneMinuteLoadAverage,
           fiveMinuteLoadAverage,
           fifteenMinuteLoadAverage,
           cpuCount,
