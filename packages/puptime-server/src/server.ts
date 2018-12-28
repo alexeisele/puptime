@@ -1,5 +1,3 @@
-import { Server } from "http";
-import { Application } from "express";
 import app from "./app";
 const PORT = 3001;
 
