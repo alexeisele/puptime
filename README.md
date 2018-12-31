@@ -2,7 +2,7 @@
 
 ## Steps to run:
 
-1. Ensure you have MongoDB installed and running by following the steps for either:
+1. Ensure you have MongoDB installed and running with the default configuration at `mongodb://localhost:27017` by following the steps for either:
 
    - [Linux](https://docs.mongodb.com/manual/administration/install-on-linux/)
    - [Mac OS](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/)
