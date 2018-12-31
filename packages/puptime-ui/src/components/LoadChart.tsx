@@ -22,34 +22,37 @@ const timeScale = () => {
   return scale;
 };
 
-const LoadChart = (props: ILoadChartProps) => (
-  <Chart data={props.loadEvents}>
-    <ArgumentScale factory={timeScale as any} />
-    <ArgumentAxis />
-    <ValueAxis />
-    <LineSeries
-      valueField="oneMinuteLoadAverage"
-      argumentField="time"
-      name="1 Minute"
-    />
-    <LineSeries
-      valueField="twoMinuteLoadAverage"
-      argumentField="time"
-      name="2 Minutes"
-    />
-    <LineSeries
-      valueField="fiveMinuteLoadAverage"
-      argumentField="time"
-      name="5 Minutes"
-    />
-    <LineSeries
-      valueField="fifteenMinuteLoadAverage"
-      argumentField="time"
-      name="15 Minutes"
-    />
-    <Legend />
-    <Title text="Machine Load Average" />
-  </Chart>
-);
+const LoadChart = (props: ILoadChartProps) =>
+  props.loadEvents.length ? (
+    <Chart data={props.loadEvents}>
+      <ArgumentScale factory={timeScale as any} />
+      <ArgumentAxis />
+      <ValueAxis />
+      <LineSeries
+        valueField="oneMinuteLoadAverage"
+        argumentField="time"
+        name="1 Minute"
+      />
+      <LineSeries
+        valueField="twoMinuteLoadAverage"
+        argumentField="time"
+        name="2 Minutes"
+      />
+      <LineSeries
+        valueField="fiveMinuteLoadAverage"
+        argumentField="time"
+        name="5 Minutes"
+      />
+      <LineSeries
+        valueField="fifteenMinuteLoadAverage"
+        argumentField="time"
+        name="15 Minutes"
+      />
+      <Legend />
+      <Title text="Machine Load Average" />
+    </Chart>
+  ) : (
+    <></>
+  );
 
 export default LoadChart;
